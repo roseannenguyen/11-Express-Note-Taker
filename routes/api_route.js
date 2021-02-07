@@ -38,9 +38,9 @@ module.exports = app => {
         var getID = req.params.id
         var emptyNote = []
 
-        var getNotes = JSON.parse(fs.readFileSync("./db/db.json"));
+        var getNotes = path.join(__dirname, "./db/db.json");
 
-        getNotes = getNotes.filter(selectedNote => {
+        getNotes = getNotes.slice(selectedNote => {
             return selectedNote.id != getID;
         })
 
