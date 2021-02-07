@@ -45,7 +45,7 @@ module.exports = app => {
         })
 
         for (selectedNote of getNotes) {
-            selectedNote.id = newID.toString();
+            selectedNote.id = getID.toString();
             emptyNote++;
         }
 
