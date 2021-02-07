@@ -2,6 +2,7 @@ var path = require("path");
 var fs = require("fs");
 var { v4: uuidv4 } = require('uuid');
 
+
 function getNotes() {
     var storedNotes = require("../db/db.json");
     return storedNotes
@@ -24,7 +25,7 @@ module.exports = app => {
 
         storedNotes.push(req.body);
 
-        fs.writeFile("./db/db.json", JSON.stringify(storedNotes), (err) => {
+        fs.writeFileSync("./db/db.json", JSON.stringify(storedNotes), (err) => {
             if (err) throw err;
         });
 
@@ -33,13 +34,23 @@ module.exports = app => {
     });
 
     app.delete("/api/notes/:id", function (req, res) {
-        
-        req.body.id = uuid
-        
-        storedNotes.length = 0
+   
+        var getID = req.params.id
+        var emptyNote = []
 
-        storedNotes.delete(req.body);
+        var getNotes = JSON.parse(fs.readFileSync("./db/db.json"));
 
+        getNotes = getNotes.filter(selectedNote => {
+            return selectedNote.id != getID;
+        })
 
-    })
-}
+        for (selectedNote of getNotes) {
+            selectedNote.id = newID.toString();
+            emptyNote++;
+        }
+
+        fs.writeFileSync("./db/db.json", JSON.stringify(getNotes));
+        res.json(getNotes);
+    }
+    
+    )};
